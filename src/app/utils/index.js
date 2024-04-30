@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ethers } from 'ethers'
 import useLocalStorage from "use-local-storage";
 import _ from 'lodash'
@@ -17,22 +17,16 @@ export const useWallet = () => {
         await provider.send("eth_requestAccounts", []);
         const accounts = await window.ethereum.request({ method: 'eth_accounts' });
     
-        console.log(accounts, 'accounts')
         const signer = await provider.getSigner(); 
         const network = await provider.getNetwork()
         const networkName = network.name;
-        console.log(networkName,network, 'networkName')
         const balanceBigNumber = await provider.getBalance(signer.address);
         const balance = ethers.formatEther(balanceBigNumber)
-        console.log(signer,'signer')
         const wallet = {address: signer.address, network: networkName, networkChainId: network.chainId, value: balance,label: 'wallet'}
-        console.log([...wallets, wallet],'iii')
         const newWallets = _.uniqWith([...wallets, wallet], (obj1, obj2) => {
-            console.log(obj1, obj2,'obj1, obj2')
             return obj1.address === obj2.address && parseInt(obj1.networkChainId) === parseInt(obj2.networkChainId);
           });
 
-        console.log(newWallets, 'newWallets')
         return setWallets(newWallets);
 
         // console.log(signer,'signer')
@@ -54,6 +48,37 @@ export const useWallet = () => {
     }
     return [wallets, connectWallet]
 }
+
+
+export const useOnlineWallet = () => {
+    const [wallet, setWallet] =  useState();
+    useEffect(()=>{
+        if(window.ethereum) {
+            window.ethereum.on('accountsChanged', (accounts) => {
+                console.log(accounts,'accounts')
+            });
+            window.ethereum.on('chainChanged', (chainId, ...rest) => {
+                console.log(chainId,'chained',rest)
+                setWallet({...wallet, networkChainId: chainId})
+            });
+        }
+    }, [])
+
+    useEffect(()=>{
+        async function getOnlineWallet() {
+            const provider = new ethers.BrowserProvider(window.ethereum)
+            const signer = await provider.getSigner(); 
+            const network = await provider.getNetwork()
+            const networkName = network.name;
+            return {address: signer.address, network: networkName, }
+        }
+        getOnlineWallet().then((wallet)=> {
+            setWallet(wallet)
+        })
+    }, [])
+    return wallet
+}
+
 
 export const networkToColor = {
     'mainnet': 'green',
