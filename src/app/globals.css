@@ -17,17 +17,44 @@
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  /* color: rgb(var(--foreground-rgb)); */
+  background: rgb(246, 248, 250)
 }
+
+
+h-2 {
+  height: 0.2rem;
+}
+
+w-2 {
+  width: 0.2rem;
+}
+
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+.main {
+  width: 100%;
+}
+
+
+.balance {
+  height: 400px;
+  width: 100%;
+}
+
+.balance .card {
+  height: 100%;
+  width: 100%;
+  color: rgb(181, 191, 199);
+  font-weight: bold;
+}
+
+.account {
+  height: 500px;
+  width: 100%;
 }
