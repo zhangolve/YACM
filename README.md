@@ -41,7 +41,9 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 - 写一个自己的钱包
 - 用自己的钱包去交易
 - 钱包,智能合约，交易结果，blockchain explorer
-
+- 根据合约地址，导入合约资产。
+- 显示合约balances
+- eslint prettier配置似乎没有起作用，看一下。
 
 Provider	A Provider (in ethers) is a class which provides an abstraction for a connection to the Ethereum Network. It provides read-only access to the Blockchain and its status.	 
 Signer	A Signer is a class which (usually) in some way directly or indirectly has access to a private key, which can sign messages and transactions to authorize the network to charge your account ether to perform operations.	 

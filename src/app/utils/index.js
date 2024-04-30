@@ -29,7 +29,7 @@ export const useWallet = () => {
         console.log([...wallets, wallet],'iii')
         const newWallets = _.uniqWith([...wallets, wallet], (obj1, obj2) => {
             console.log(obj1, obj2,'obj1, obj2')
-            return obj1.address === obj2.address && obj1.networkChainId === obj2.networkChainId;
+            return obj1.address === obj2.address && parseInt(obj1.networkChainId) === parseInt(obj2.networkChainId);
           });
 
         console.log(newWallets, 'newWallets')
