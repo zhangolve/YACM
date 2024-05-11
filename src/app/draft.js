@@ -16,7 +16,6 @@ const tokens = [
   // Add more token addresses as needed
 ];
 
-console.log(ethers, "ethers");
 export default function Home() {
   const [balance, setBalance] = useState(0);
   const connectWallet = async () => {

@@ -30,8 +30,6 @@ const Send = () => {
         // 0xAA102F12737C9d1A268157231E58175383cE52b9
         to: recipient,
         value: ethers.parseEther(value),
-        //   gasLimit: 21000,
-        //   gasPrice: ethers.parseUnits('10', 'gwei'),vtt
         data: dataHexString,
       });
       console.log(tx);

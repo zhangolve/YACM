@@ -1,8 +1,8 @@
-const Card = () => {
+const Card = ({ title, content }) => {
   return (
-    <div className="mx-auto bg-white rounded-xl shadow-md overflow-hidden card">
-      <h2>Balance Breakdown(Viewing All Accounts)</h2>
-      No Assets Found
+    <div className="mx-auto bg-white rounded-xl shadow-md overflow-hidden card p-4">
+      <h2>{title}</h2>
+      {content}
     </div>
   );
 };
