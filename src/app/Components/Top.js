@@ -1,9 +1,9 @@
 const Top = () => {
-    return (
-        <div>
-            <h1>Top</h1>
-        </div>
-    )
-}
+  return (
+    <div>
+      <h1>Top</h1>
+    </div>
+  );
+};
 
 export default Top;
