@@ -1,5 +1,10 @@
 import Table from "@/commons/Table";
-import { networkToColor, useMergedWallets, statusToColor } from "@/utils";
+import {
+  networkToColor,
+  useMergedWallets,
+  statusToColor,
+  chainIdToNetwork,
+} from "@/utils";
 
 const ColoredNetwork = ({ network }) => {
   return (
@@ -23,11 +28,11 @@ const columns = [
   { name: "label" },
   { name: "address" },
   {
-    name: "network",
+    name: "networkChainId",
     render: (value) => (
       <>
         <ColoredNetwork network={value} />
-        <span>{value}</span>
+        <span>{chainIdToNetwork[value]?.chain_name ?? "unknown"}</span>
       </>
     ),
   },
@@ -37,7 +42,6 @@ const columns = [
 
 const AccountCard = () => {
   const [wallets, connectWallet] = useMergedWallets();
-
   return (
     <div className="mx-auto bg-white rounded-xl shadow-md overflow-hidden card">
       <h2>Accounts</h2>

@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import useLocalStorage from "use-local-storage";
 import _ from "lodash";
-import { net } from "web3";
 
 export const useWallet = () => {
   const [signer, setSigner] = useState(null);
@@ -118,16 +117,6 @@ export const useMergedWallets = () => {
   useEffect(() => {
     if (onlineWallet) {
       const result = wallets?.map((wallet) => {
-        console.log(
-          wallet,
-          "wallet",
-          onlineWallet,
-          "onlineWallet",
-          wallet.networkChainId,
-          onlineWallet.networkChainId,
-          wallet.networkChainId == onlineWallet.networkChainId,
-          wallet.address === onlineWallet.address,
-        );
         return {
           ...wallet,
           online:
@@ -144,14 +133,66 @@ export const useMergedWallets = () => {
   return [mergedWallets, connectWallet];
 };
 
-export const networkToColor = {
-  mainnet: "green",
-  ropsten: "red",
-  rinkeby: "blue",
-  kovan: "purple",
-  goerli: "orange",
-  bnb: "yellow",
+// chain id 是唯一的，不同的网络有不同的chain id，通过chain id可以知道对应的网络，至于这个网络名字是简写成bnb还是bsc,还是其他的，可以自己定义
+
+export const chainIdToNetwork = {
+  1: {
+    chain_name: "Ethereum_Mainnet",
+    chain_color: "#0000ff",
+  },
+  3: {
+    chain_name: "Ropsten_Testnet",
+    chain_color: "#ffff00",
+  },
+  42: {
+    chain_name: "Kovan_Testnet",
+    chain_color: "#008000",
+  },
+  4: {
+    chain_name: "Rinkeby_Testnet",
+    chain_color: "#ff0000",
+  },
+  5: {
+    chain_name: "Goerli_Testnet",
+    chain_color: "#800080",
+  },
+  100: {
+    chain_name: "xDai",
+    chain_color: "#ffa500",
+  },
+  56: {
+    chain_name: "BSC",
+    chain_color: "#add8e6",
+  },
+  137: {
+    chain_name: "Matic_Mainnet",
+    chain_color: "#9370db",
+  },
+  42161: {
+    chain_name: "Arbitrum_One",
+    chain_color: "#008080",
+  },
+  10: {
+    chain_name: "Optimism",
+    chain_color: "#90ee90",
+  },
 };
+
+export const networkChainArray = Object.keys(chainIdToNetwork).map((key) => {
+  return {
+    chainId: key,
+    network: chainIdToNetwork[key].chain_name,
+    chain_color: chainIdToNetwork[key].chain_color,
+  };
+});
+
+export const networkToColor = Object.keys(chainIdToNetwork).reduce(
+  (acc, key) => {
+    acc[key] = chainIdToNetwork[key].chain_color;
+    return acc;
+  },
+  {},
+);
 
 export const statusToColor = {
   Online: "green",

@@ -15,6 +15,7 @@ import { ethers } from "ethers";
 import FailedModal from "./FailedModal";
 import Link from "next/link";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
+import { AssetsSelector, NetworkSelector } from "./Selectors";
 
 const Send = () => {
   const { register, handleSubmit } = useForm();
@@ -84,6 +85,24 @@ const Send = () => {
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   {...register("recipient", { required: true })}
                 />
+              </div>
+              <div>
+                <label
+                  htmlfor="network"
+                  className="block mb-2 text-sm font-medium text-gray-900"
+                >
+                  Network
+                </label>
+                <NetworkSelector />
+              </div>
+              <div>
+                <label
+                  htmlfor="value"
+                  className="block mb-2 text-sm font-medium text-gray-900"
+                >
+                  Assets
+                </label>
+                <AssetsSelector />
               </div>
               <div>
                 <label

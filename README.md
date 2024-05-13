@@ -61,6 +61,13 @@ Contract	A Contract is an abstraction which represents a connection to a specifi
 
 导入私钥的过程是怎样的。
 
+断开钱包
+
+
+添加自定义网络： ![](https://storage.googleapis.com/13823zxw.appspot.com/AgACAgUAAxkBAAJSaGZB0ZkdwqgWzxC4iTnHgYOiPe21AAJRwDEblYgRVmylMKzWM8iqAQADAgADeAADNQQ.jpg)
+
+自定义添加网络，自定义添加token的功能
+
 https://github.com/MetaMask/metamask-extension
 
 
