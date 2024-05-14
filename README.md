@@ -90,3 +90,14 @@ https://nextjs.org/docs/pages/building-your-application/routing/internationaliza
 https://nextjs.org/docs/messages/react-hydration-error#solution-2-disabling-ssr-on-specific-components
 
 - 使用tailwind的时候，由于tailwind是按需加载的，因此，直接修改浏览器的样式，并不能直接在浏览器里面看到效果。需要改代码，来看效果。所谓按需加载的意思是，只有在代码中使用了这个样式，才会被打包进去。
+
+// try {
+//     // Estimate gas
+//     const gasEstimate = await provider.estimateGas(transaction);
+//     console.log("Estimated gas:", gasEstimate.toString());
+// } catch (error) {
+//     console.error("Error estimating gas:", error);
+// }
+
+// https://flowbite.com/docs/forms/input-field/
+// https://react-hook-form.com/get-started

@@ -1,70 +1,80 @@
 import { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import useLocalStorage from "use-local-storage";
-import _ from "lodash";
+import _, { set } from "lodash";
+
+export const connectWallet = async () => {
+  if (window.ethereum) {
+    const provider = new ethers.BrowserProvider(window.ethereum);
+
+    // It also provides an opportunity to request access to write
+    // operations, which will be performed by the private key
+    // that MetaMask manages for the user.
+    await provider.send("eth_requestAccounts", []);
+    const accounts = await window.ethereum.request({
+      method: "eth_accounts",
+    });
+
+    const signer = await provider.getSigner();
+    const network = await provider.getNetwork();
+    const networkName = network.name;
+    const balanceBigNumber = await provider.getBalance(signer.address);
+    const balance = ethers.formatEther(balanceBigNumber);
+    const wallet = {
+      address: signer.address,
+      network: networkName,
+      networkChainId: network.chainId,
+      value: balance,
+      label: "wallet",
+    };
+    return wallet;
+  }
+  return null;
+};
 
 export const useWallet = () => {
   const [signer, setSigner] = useState(null);
   const [wallets, setWallets] = useLocalStorage("wallets", []);
-  const connectWallet = async () => {
-    if (window.ethereum) {
-      const provider = new ethers.BrowserProvider(window.ethereum);
-
-      // It also provides an opportunity to request access to write
-      // operations, which will be performed by the private key
-      // that MetaMask manages for the user.
-      await provider.send("eth_requestAccounts", []);
-      const accounts = await window.ethereum.request({
-        method: "eth_accounts",
-      });
-
-      const signer = await provider.getSigner();
-      const network = await provider.getNetwork();
-      const networkName = network.name;
-      const balanceBigNumber = await provider.getBalance(signer.address);
-      const balance = ethers.formatEther(balanceBigNumber);
-      const wallet = {
-        address: signer.address,
-        network: networkName,
-        networkChainId: network.chainId,
-        value: balance,
-        label: "wallet",
-      };
-      const newWallets = _.uniqWith([...wallets, wallet], (obj1, obj2) => {
-        return (
-          obj1.address === obj2.address &&
-          parseInt(obj1.networkChainId) === parseInt(obj2.networkChainId)
-        );
-      });
-
-      return setWallets(newWallets);
-
-      // console.log(signer,'signer')
-
-      // console.log(balance, 'balance')
-      // setBalance(balance)
-      //     const balances = {};
-      //     for (const token of tokens) {
-      //       const tokenContract = new ethers.Contract(token.address, erc20Abi, provider);
-
-      //       const balance = await tokenContract.balanceOf(signer.address);
-      //       console.log(balance, 'balance')
-      //       const decimals = await tokenContract.decimals();
-
-      //       balances[token.name] = ethers.formatUnits(balance, decimals);
-      //   }
-      //   console.log("Token Balances:", balances);
+  const addWallet = async () => {
+    const wallet = await connectWallet();
+    if (!wallet) {
+      return;
     }
+    const newWallets = _.uniqWith([...wallets, wallet], (obj1, obj2) => {
+      return (
+        obj1.address === obj2.address &&
+        parseInt(obj1.networkChainId) === parseInt(obj2.networkChainId)
+      );
+    });
+
+    return setWallets(newWallets);
+
+    // console.log(signer,'signer')
+
+    // console.log(balance, 'balance')
+    // setBalance(balance)
+    //     const balances = {};
+    //     for (const token of tokens) {
+    //       const tokenContract = new ethers.Contract(token.address, erc20Abi, provider);
+
+    //       const balance = await tokenContract.balanceOf(signer.address);
+    //       console.log(balance, 'balance')
+    //       const decimals = await tokenContract.decimals();
+
+    //       balances[token.name] = ethers.formatUnits(balance, decimals);
+    //   }
+    //   console.log("Token Balances:", balances);
   };
-  return [wallets, connectWallet];
+  return [wallets, addWallet];
 };
 
 export const useOnlineWallet = () => {
-  const [wallet, setWallet] = useState({});
+  const [wallet, setWallet] = useState();
+  const [accounts, setAccounts] = useState();
   useEffect(() => {
     if (window.ethereum) {
       window.ethereum.on("accountsChanged", (accounts) => {
-        console.log(accounts, "accounts");
+        setAccounts(accounts);
       });
       window.ethereum.on("chainChanged", (chainId, ...rest) => {
         setWallet({ ...wallet, networkChainId: parseInt(chainId, 16) });
@@ -98,6 +108,7 @@ export const useOnlineWallet = () => {
             // MetaMask is connected, you can proceed with your application logic
           } else {
             console.log("MetaMask is not connected!");
+            setWallet(null);
           }
         })
         .catch((error) => {
@@ -106,7 +117,7 @@ export const useOnlineWallet = () => {
     } else {
       console.log("MetaMask is not installed!");
     }
-  }, []);
+  }, [accounts]);
   return wallet;
 };
 
@@ -175,6 +186,14 @@ export const chainIdToNetwork = {
   10: {
     chain_name: "Optimism",
     chain_color: "#90ee90",
+  },
+  59144: {
+    chain_name: "Linea Mainnet",
+    chain_color: "#ff4500",
+  },
+  11155111: {
+    chain_name: "sepolia_Testnet",
+    chain_color: "#ff4500",
   },
 };
 
