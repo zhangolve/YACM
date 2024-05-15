@@ -20,6 +20,7 @@ export const connectWallet = async () => {
     const networkName = network.name;
     const balanceBigNumber = await provider.getBalance(signer.address);
     const balance = ethers.formatEther(balanceBigNumber);
+    console.log(balance, "balance");
     const wallet = {
       address: signer.address,
       network: networkName,
@@ -89,7 +90,14 @@ export const useOnlineWallet = () => {
       const network = await provider.getNetwork();
       const networkName = network.name;
       const networkChainId = network.chainId;
-      return { address: signer.address, network: networkName, networkChainId };
+      const balanceBigNumber = await provider.getBalance(signer.address);
+      const balance = ethers.formatEther(balanceBigNumber);
+      return {
+        address: signer.address,
+        network: networkName,
+        networkChainId,
+        value: balance,
+      };
     }
 
     if (typeof window.ethereum !== "undefined") {
@@ -146,74 +154,4 @@ export const useMergedWallets = () => {
 
 // chain id 是唯一的，不同的网络有不同的chain id，通过chain id可以知道对应的网络，至于这个网络名字是简写成bnb还是bsc,还是其他的，可以自己定义
 
-export const chainIdToNetwork = {
-  1: {
-    chain_name: "Ethereum_Mainnet",
-    chain_color: "#0000ff",
-  },
-  3: {
-    chain_name: "Ropsten_Testnet",
-    chain_color: "#ffff00",
-  },
-  42: {
-    chain_name: "Kovan_Testnet",
-    chain_color: "#008000",
-  },
-  4: {
-    chain_name: "Rinkeby_Testnet",
-    chain_color: "#ff0000",
-  },
-  5: {
-    chain_name: "Goerli_Testnet",
-    chain_color: "#800080",
-  },
-  100: {
-    chain_name: "xDai",
-    chain_color: "#ffa500",
-  },
-  56: {
-    chain_name: "BSC",
-    chain_color: "#add8e6",
-  },
-  137: {
-    chain_name: "Matic_Mainnet",
-    chain_color: "#9370db",
-  },
-  42161: {
-    chain_name: "Arbitrum_One",
-    chain_color: "#008080",
-  },
-  10: {
-    chain_name: "Optimism",
-    chain_color: "#90ee90",
-  },
-  59144: {
-    chain_name: "Linea Mainnet",
-    chain_color: "#ff4500",
-  },
-  11155111: {
-    chain_name: "sepolia_Testnet",
-    chain_color: "#ff4500",
-  },
-};
-
-export const networkChainArray = Object.keys(chainIdToNetwork).map((key) => {
-  return {
-    chainId: key,
-    network: chainIdToNetwork[key].chain_name,
-    chain_color: chainIdToNetwork[key].chain_color,
-  };
-});
-
-export const networkToColor = Object.keys(chainIdToNetwork).reduce(
-  (acc, key) => {
-    acc[key] = chainIdToNetwork[key].chain_color;
-    return acc;
-  },
-  {},
-);
-
-export const statusToColor = {
-  Online: "green",
-  Offline: "gray",
-};
+// https://chainid.network/chains_mini.json

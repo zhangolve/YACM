@@ -1,4 +1,4 @@
-import { networkChainArray } from "@/app/utils";
+import { networkChainArray } from "@/constant";
 import { switchNetwork, toHex } from "./utils";
 
 export const NetworkSelector = () => {

@@ -1,10 +1,6 @@
 import Table from "@/commons/Table";
-import {
-  networkToColor,
-  useMergedWallets,
-  statusToColor,
-  chainIdToNetwork,
-} from "@/utils";
+import { useMergedWallets } from "@/utils";
+import { networkToColor, statusToColor, chainIdToNetwork } from "@/constant";
 
 const ColoredNetwork = ({ network }) => {
   return (
