@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import useLocalStorage from "use-local-storage";
-import _, { set } from "lodash";
+import _, { chain, set } from "lodash";
 
 import useSWR from "swr";
 
@@ -29,7 +29,6 @@ export const connectWallet = async () => {
     const networkName = network.name;
     const balanceBigNumber = await provider.getBalance(signer.address);
     const balance = ethers.formatEther(balanceBigNumber);
-    console.log(balance, "balance");
     const wallet = {
       address: signer.address,
       network: networkName,
@@ -98,7 +97,7 @@ export const useOnlineWallet = () => {
       const signer = await provider.getSigner();
       const network = await provider.getNetwork();
       const networkName = network.name;
-      const networkChainId = network.chainId;
+      const networkChainId = Number(network.chainId);
       const balanceBigNumber = await provider.getBalance(signer.address);
       const balance = ethers.formatEther(balanceBigNumber);
       return {
@@ -119,7 +118,12 @@ export const useOnlineWallet = () => {
           if (accounts.length > 0) {
             console.log("MetaMask is connected!");
             getOnlineWallet().then((wallet) => {
-              console.log(wallet, "wallet");
+              console.log(
+                wallet,
+                "wallet",
+                typeof wallet.networkChainId,
+                "chainId",
+              );
               setWallet(wallet);
             });
             // MetaMask is connected, you can proceed with your application logic

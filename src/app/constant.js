@@ -4,18 +4,6 @@ export const chainIdToNetwork = {
     chain_name: "Ethereum_Mainnet",
     chain_color: "#0000ff",
   },
-  3: {
-    chain_name: "Ropsten_Testnet",
-    chain_color: "#ffff00",
-  },
-  42: {
-    chain_name: "Kovan_Testnet",
-    chain_color: "#008000",
-  },
-  4: {
-    chain_name: "Rinkeby_Testnet",
-    chain_color: "#ff0000",
-  },
   5: {
     chain_name: "Goerli_Testnet",
     chain_color: "#800080",
@@ -23,6 +11,10 @@ export const chainIdToNetwork = {
   100: {
     chain_name: "xDai",
     chain_color: "#ffa500",
+  },
+  8453: {
+    chain_name: "Base",
+    chain_color: "#000000",
   },
   56: {
     chain_name: "BSC",

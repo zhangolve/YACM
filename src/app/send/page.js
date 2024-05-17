@@ -27,7 +27,6 @@ const Send = () => {
         value: ethers.parseEther(value),
         data: dataHexString,
       });
-      console.log(tx);
     } catch {
       console.log("error");
       setShowFailedModal(true);
@@ -56,7 +55,7 @@ const Send = () => {
             <div className="grid gap-6 mb-6">
               <div>
                 <label
-                  htmlfor="sender"
+                  htmlFor="sender"
                   className="block mb-2 text-sm font-medium text-gray-900"
                 >
                   Sender
@@ -69,7 +68,7 @@ const Send = () => {
               </div>
               <div>
                 <label
-                  htmlfor="recipient"
+                  htmlFor="recipient"
                   className="block mb-2 text-sm font-medium text-gray-900"
                 >
                   Recipient
@@ -83,7 +82,7 @@ const Send = () => {
               <div className="flex justify-between align-center">
                 <div>
                   <label
-                    htmlfor="network"
+                    htmlFor="network"
                     className="block mb-2 text-sm font-medium text-gray-900"
                   >
                     Network
@@ -92,7 +91,7 @@ const Send = () => {
                 </div>
                 <div>
                   <label
-                    htmlfor="value"
+                    htmlFor="value"
                     className="block mb-2 text-sm font-medium text-gray-900"
                   >
                     Assets
@@ -101,7 +100,7 @@ const Send = () => {
                 </div>
                 <div>
                   <label
-                    htmlfor="value"
+                    htmlFor="value"
                     className="block mb-2 text-sm font-medium text-gray-900"
                   >
                     value

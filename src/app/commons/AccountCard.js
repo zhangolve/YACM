@@ -5,7 +5,7 @@ import { networkToColor, statusToColor, chainIdToNetwork } from "@/constant";
 const ColoredNetwork = ({ network }) => {
   return (
     <div
-      class="h-2 w-2 rounded-full mr-2 inline-block"
+      className="h-2 w-2 rounded-full mr-2 inline-block"
       style={{ background: networkToColor[network] ?? "black" }}
     ></div>
   );
@@ -14,7 +14,7 @@ const ColoredNetwork = ({ network }) => {
 const ColoredStatus = ({ online }) => {
   return (
     <div
-      class="h-2 w-2 rounded-full mr-2 inline-block"
+      className="h-2 w-2 rounded-full mr-2 inline-block"
       style={{ background: online ? statusToColor["Online"] : "gray" }}
     ></div>
   );

@@ -12,7 +12,6 @@ export default function Home() {
 
   useEffect(() => {
     if (data) {
-      console.log(data, "data");
       setNetworkList(data);
     }
   }, [data]);

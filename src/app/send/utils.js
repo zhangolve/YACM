@@ -1,5 +1,5 @@
 import { networkListAtom } from "@/jotai";
-import { useAtom } from "jotai";
+import { useAtomValue } from "jotai";
 
 export async function switchNetwork(chainId, chainInfo) {
   try {
@@ -8,18 +8,17 @@ export async function switchNetwork(chainId, chainInfo) {
       params: [{ chainId }],
     });
   } catch (error) {
-    addPolygonNetwork(chainInfo);
+    addNetwork(chainInfo);
   }
 }
 
 export const useSwitchNetwork = () => {
-  const [networkList, setNetworkList] = useAtom(networkListAtom);
+  const networkList = useAtomValue(networkListAtom);
   const switchNetworkCallback = (originalChainId) => {
     const chainId = toHex(originalChainId);
     const info = networkList?.find(
       (network) => network.chainId == originalChainId,
     );
-    console.log(info, "info");
     if (info) {
       info.chainId = chainId;
     }
@@ -28,9 +27,8 @@ export const useSwitchNetwork = () => {
   return switchNetworkCallback;
 };
 
-const addPolygonNetwork = async (chainInfo) => {
+const addNetwork = async (chainInfo) => {
   try {
-    console.log(chainInfo, "chainInfo");
     await window.ethereum.request({
       method: "wallet_addEthereumChain",
       params: [chainInfo],

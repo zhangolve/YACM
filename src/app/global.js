@@ -7,11 +7,10 @@ import { useEffect } from "react";
 
 export default function Home({ children }) {
   const setNetworkList = useSetAtom(networkListAtom);
-  const { data, error, isLoading } = useSWR({ url: `/api/networks` }, fetcher);
+  const { data, isLoading } = useSWR({ url: `/api/networks` }, fetcher);
 
   useEffect(() => {
     if (data) {
-      console.log(data, "data");
       setNetworkList(data.data);
     }
   }, [data]);
