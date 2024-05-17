@@ -5,6 +5,7 @@ import { ethers } from "ethers";
 import FailedModal from "./FailedModal";
 import Link from "next/link";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
+import { LuPlus } from "react-icons/lu";
 import { useOnlineWallet, connectWallet } from "@/app/utils";
 
 import { AssetsSelector, NetworkSelector } from "./Selectors";
@@ -43,13 +44,26 @@ const Send = () => {
     <div className="grid place-items-center mt-10">
       <div className="md:w-1/2 ">
         <h1 className="text-2xl font-bold">Send</h1>
-        <Link
-          href="/"
-          className="flex items-center text-blue-500 focus:blue-700"
-        >
-          <MdOutlineKeyboardBackspace />
-          Back to home
-        </Link>
+
+        <div className="flex justify-between">
+          <Link
+            href="/"
+            className="flex items-center text-blue-500 focus:blue-700"
+          >
+            <MdOutlineKeyboardBackspace />
+            Back to home
+          </Link>
+          <div className="flex">
+            <button className="flex items-center text-blue-500 focus:blue-700 mx-3">
+              <LuPlus />
+              add token
+            </button>
+            <button className="flex items-center text-blue-500 focus:blue-700">
+              <LuPlus />
+              add network
+            </button>
+          </div>
+        </div>
         <div className="bg-gray-200 p-4 my-4">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="grid gap-6 mb-6">
