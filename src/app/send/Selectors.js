@@ -1,15 +1,13 @@
 import { networkChainArray } from "@/constant";
-import { switchNetwork, toHex } from "./utils";
+import { toHex, useSwitchNetwork } from "./utils";
 
 export const NetworkSelector = () => {
+  const switchNetwork = useSwitchNetwork();
   return (
     <select
       className="p-2.5"
       onChange={(e) => {
-        console.log(e.target.value);
-        const a = toHex(e.target.value);
-        console.log(a, "a");
-        switchNetwork(a);
+        switchNetwork(e.target.value);
       }}
     >
       {networkChainArray.map((network) => (

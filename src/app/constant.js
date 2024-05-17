@@ -1,3 +1,4 @@
+// localstorage data, not saved to server
 export const chainIdToNetwork = {
   1: {
     chain_name: "Ethereum_Mainnet",

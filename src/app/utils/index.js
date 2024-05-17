@@ -3,6 +3,15 @@ import { ethers } from "ethers";
 import useLocalStorage from "use-local-storage";
 import _, { set } from "lodash";
 
+import useSWR from "swr";
+
+export const fetcher = (args) =>
+  fetch(typeof args === "string" ? args : args.url, args).then((res) =>
+    res.json(),
+  );
+
+export const useMySWR = (args) => useSWR(args, fetcher);
+
 export const connectWallet = async () => {
   if (window.ethereum) {
     const provider = new ethers.BrowserProvider(window.ethereum);

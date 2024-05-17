@@ -5,8 +5,9 @@ import { ethers } from "ethers";
 import FailedModal from "./FailedModal";
 import Link from "next/link";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
-import { AssetsSelector, NetworkSelector } from "./Selectors";
 import { useOnlineWallet, connectWallet } from "@/app/utils";
+
+import { AssetsSelector, NetworkSelector } from "./Selectors";
 
 const Send = () => {
   const { register, handleSubmit } = useForm();
@@ -22,7 +23,6 @@ const Send = () => {
 
     try {
       const tx = await signer.sendTransaction({
-        // 0xAA102F12737C9d1A268157231E58175383cE52b9
         to: recipient,
         value: ethers.parseEther(value),
         data: dataHexString,

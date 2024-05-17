@@ -1,19 +1,18 @@
 "use client";
-import { Top, Main, Bottom } from "./Components";
 import useSWR from "swr";
 import { fetcher } from "@/utils";
 import { networkListAtom } from "@/jotai";
 import { useSetAtom } from "jotai";
 import { useEffect } from "react";
 
-export default function Home() {
+export default function Home({ children }) {
   const setNetworkList = useSetAtom(networkListAtom);
   const { data, error, isLoading } = useSWR({ url: `/api/networks` }, fetcher);
 
   useEffect(() => {
     if (data) {
       console.log(data, "data");
-      setNetworkList(data);
+      setNetworkList(data.data);
     }
   }, [data]);
 
@@ -21,11 +20,5 @@ export default function Home() {
     return <div>loading</div>;
   }
 
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-4">
-      <Top />
-      <Main />
-      <Bottom />
-    </main>
-  );
+  return children;
 }
