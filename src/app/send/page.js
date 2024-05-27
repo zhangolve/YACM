@@ -9,11 +9,13 @@ import { LuPlus } from "react-icons/lu";
 import { useOnlineWallet, connectWallet } from "@/app/utils";
 
 import { AssetsSelector, NetworkSelector } from "./Selectors";
+import AddToken from "./AddToken";
 
 const Send = () => {
   const { register, handleSubmit } = useForm();
 
   const [showFailedModal, setShowFailedModal] = useState(false);
+  const [showAddToken, setShowAddToken] = useState(false);
   const wallet = useOnlineWallet();
 
   const sendMoney = async ({ recipient, value }) => {
@@ -54,7 +56,10 @@ const Send = () => {
             Back to home
           </Link>
           <div className="flex">
-            <button className="flex items-center text-blue-500 focus:blue-700 mx-3">
+            <button
+              className="flex items-center text-blue-500 focus:blue-700 mx-3"
+              onClick={() => setShowAddToken(true)}
+            >
               <LuPlus />
               add token
             </button>
@@ -67,19 +72,6 @@ const Send = () => {
         <div className="bg-gray-200 p-4 my-4">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="grid gap-6 mb-6">
-              <div>
-                <label
-                  htmlFor="sender"
-                  className="block mb-2 text-sm font-medium text-gray-900"
-                >
-                  Sender
-                </label>
-                <input
-                  id="sender"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                  {...register("sender", { required: true })}
-                />
-              </div>
               <div>
                 <label
                   htmlFor="recipient"
@@ -147,6 +139,9 @@ const Send = () => {
           </form>
           {showFailedModal && (
             <FailedModal onClose={() => setShowFailedModal(false)} />
+          )}
+          {showAddToken && (
+            <AddToken onClose={() => setShowFailedModal(false)} />
           )}
         </div>
       </div>

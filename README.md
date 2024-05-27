@@ -101,3 +101,6 @@ https://nextjs.org/docs/messages/react-hydration-error#solution-2-disabling-ssr-
 
 // https://flowbite.com/docs/forms/input-field/
 // https://react-hook-form.com/get-started
+
+
+9a0aa02562dd4ec98048a5481f8ef487[text](../voice-words/.env.development.local)

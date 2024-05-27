@@ -6,6 +6,7 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+  --modal-background-color: 245,245,220;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -57,4 +58,14 @@ w-2 {
 .account {
   height: 500px;
   width: 100%;
+}
+
+.center {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.modal-background {
+  background-color: rgb(var(--modal-background-color));
 }
