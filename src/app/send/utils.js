@@ -45,8 +45,6 @@ export function toHex(d) {
 }
 
 export const getContractInfo = async (contractAddress) => {
-  // 连接以太坊主网
-  console.log(process.env.NEXT_PUBLIC_INFURA_ID);
   const provider = new ethers.JsonRpcProvider(
     `https://mainnet.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_ID}`,
   );
@@ -56,7 +54,12 @@ export const getContractInfo = async (contractAddress) => {
     "function totalSupply() view returns (uint256)",
     "function balanceOf(address) view returns (uint)",
   ];
-  const contract = new ethers.Contract(contractAddress, abiERC20, provider);
-  const tokenName = await contract.symbol();
-  return tokenName;
+  try {
+    const contract = new ethers.Contract(contractAddress, abiERC20, provider);
+    const tokenName = await contract.symbol();
+    return tokenName;
+  } catch (error) {
+    console.error("Failed to get token info:", error);
+    return "";
+  }
 };

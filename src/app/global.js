@@ -13,7 +13,7 @@ export default function Home({ children }) {
     if (data) {
       setNetworkList(data.data);
     }
-  }, [data]);
+  }, [data, setNetworkList]);
 
   if (isLoading) {
     return <div>loading</div>;

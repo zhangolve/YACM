@@ -1,5 +1,6 @@
 import { networkChainArray } from "@/constant";
 import { useSwitchNetwork } from "./utils";
+import useLocalStorage from "use-local-storage";
 
 export const NetworkSelector = () => {
   const switchNetwork = useSwitchNetwork();
@@ -20,10 +21,15 @@ export const NetworkSelector = () => {
 };
 
 export const AssetsSelector = () => {
+  const [tokens] = useLocalStorage("tokens", []);
   return (
     <select className="p-2.5">
       <option value="ETH">ETH</option>
-      <option value="BNB">BNB</option>
+      {tokens.map((token) => (
+        <option value={token.address} key={token.address}>
+          {token.name}
+        </option>
+      ))}
     </select>
   );
 };

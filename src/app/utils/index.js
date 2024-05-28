@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import useLocalStorage from "use-local-storage";
-import _, { chain, set } from "lodash";
+import _ from "lodash";
 
 import useSWR from "swr";
 

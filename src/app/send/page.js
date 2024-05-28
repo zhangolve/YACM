@@ -140,9 +140,7 @@ const Send = () => {
           {showFailedModal && (
             <FailedModal onClose={() => setShowFailedModal(false)} />
           )}
-          {showAddToken && (
-            <AddToken onClose={() => setShowFailedModal(false)} />
-          )}
+          {showAddToken && <AddToken onClose={() => setShowAddToken(false)} />}
         </div>
       </div>
     </div>
