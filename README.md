@@ -43,7 +43,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 - 钱包,智能合约，交易结果，blockchain explorer, 区块链浏览器， transaction history，yet another my crypto wallet management tool 
 - 根据合约地址，导入合约资产。
 - 显示合约balances
-
+- 添加token， 添加自定义网络，根据网络添加token
 
 Provider	A Provider (in ethers) is a class which provides an abstraction for a connection to the Ethereum Network. It provides read-only access to the Blockchain and its status.	 
 Signer	A Signer is a class which (usually) in some way directly or indirectly has access to a private key, which can sign messages and transactions to authorize the network to charge your account ether to perform operations.	 
@@ -102,5 +102,3 @@ https://nextjs.org/docs/messages/react-hydration-error#solution-2-disabling-ssr-
 // https://flowbite.com/docs/forms/input-field/
 // https://react-hook-form.com/get-started
 
-
-9a0aa02562dd4ec98048a5481f8ef487[text](../voice-words/.env.development.local)

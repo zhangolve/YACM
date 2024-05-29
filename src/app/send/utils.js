@@ -1,6 +1,10 @@
 import { networkListAtom } from "@/jotai";
 import { useAtomValue } from "jotai";
+import {chainIdToNetwork} from "@/constant";
+
+
 const ethers = require("ethers");
+
 
 export async function switchNetwork(chainId, chainInfo) {
   try {
@@ -44,9 +48,10 @@ export function toHex(d) {
   return "0x" + i.toString(16).toUpperCase();
 }
 
-export const getContractInfo = async (contractAddress) => {
+export const getContractInfo = async (contractAddress, network) => {
+  const name = chainIdToNetwork[network]['infura_name']
   const provider = new ethers.JsonRpcProvider(
-    `https://mainnet.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_ID}`,
+    `https://${name}.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_ID}`,
   );
   const abiERC20 = [
     "function name() view returns (string)",

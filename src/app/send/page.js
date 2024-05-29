@@ -10,14 +10,21 @@ import { useOnlineWallet, connectWallet } from "@/app/utils";
 
 import { AssetsSelector, NetworkSelector } from "./Selectors";
 import AddToken from "./AddToken";
+import { useSwitchNetwork } from "./utils";
 
 const Send = () => {
   const { register, handleSubmit } = useForm();
 
   const [showFailedModal, setShowFailedModal] = useState(false);
   const [showAddToken, setShowAddToken] = useState(false);
+  const [network, setNetwork] = useState();
   const wallet = useOnlineWallet();
+  const switchNetwork = useSwitchNetwork();
 
+  const handleSwitchNetwork = (chainId) => {
+    setNetwork(chainId);
+    switchNetwork(chainId);
+  };
   const sendMoney = async ({ recipient, value }) => {
     const provider = new ethers.BrowserProvider(window.ethereum);
     const signer = await provider.getSigner();
@@ -93,7 +100,7 @@ const Send = () => {
                   >
                     Network
                   </label>
-                  <NetworkSelector />
+                  <NetworkSelector switchNetwork={handleSwitchNetwork} />
                 </div>
                 <div>
                   <label
@@ -102,7 +109,7 @@ const Send = () => {
                   >
                     Assets
                   </label>
-                  <AssetsSelector />
+                  <AssetsSelector network={network} />
                 </div>
                 <div>
                   <label

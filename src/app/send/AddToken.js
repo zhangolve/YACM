@@ -4,12 +4,14 @@ import { getContractInfo } from "./utils";
 import useLocalStorage from "use-local-storage";
 import _ from "lodash";
 import { usePrevious } from "@/utils/hooks";
+import { NetworkSelector } from "./Selectors";
 
 const AddTokenModal = ({ onClose }) => {
   const { register, handleSubmit } = useForm();
   const [tokenName, setTokenName] = useState("");
   const [tokens, setTokens] = useLocalStorage("tokens", []);
   const previousTokens = usePrevious(tokens);
+  const [network, setNetwork] = useState();
   useEffect(() => {
     if (previousTokens?.length < tokens.length) {
       onClose();
@@ -18,7 +20,7 @@ const AddTokenModal = ({ onClose }) => {
   const onSubmit = async (data) => {
     setTokens(
       _.uniqBy(
-        [...tokens, { address: data.address, name: tokenName }],
+        [...tokens, { address: data.address, name: tokenName, network }],
         "address",
       ),
     );
@@ -26,19 +28,22 @@ const AddTokenModal = ({ onClose }) => {
 
   const onContractAddressChange = async (e) => {
     const address = e.target.value;
-    const tokenName = await getContractInfo(address);
-    console.log(tokenName, "tokenName");
+    const tokenName = await getContractInfo(address, network);
     setTokenName(tokenName);
   };
 
+  const switchNetwork = (chainId) => {
+    setNetwork(chainId);
+  };
   return (
     <div
       id="popup-modal-add-token"
-      tabindex="-1"
+      tabIndex="-1"
       className="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
     >
       <div className="relative center modal-background p-4 w-full max-w-md max-h-full">
         <form onSubmit={handleSubmit(onSubmit)}>
+          <NetworkSelector switchNetwork={switchNetwork} />
           <div className="grid gap-6 mb-6">
             <div>
               <label

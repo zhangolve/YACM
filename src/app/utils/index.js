@@ -80,34 +80,37 @@ export const useWallet = () => {
 export const useOnlineWallet = () => {
   const [wallet, setWallet] = useState();
   const [accounts, setAccounts] = useState();
+
+  async function getOnlineWallet() {
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    const signer = await provider.getSigner();
+    const network = await provider.getNetwork();
+    const networkName = network.name;
+    const networkChainId = Number(network.chainId);
+    const balanceBigNumber = await provider.getBalance(signer.address);
+    const balance = ethers.formatEther(balanceBigNumber);
+    return {
+      address: signer.address,
+      network: networkName,
+      networkChainId,
+      value: balance,
+    };
+  }
+
   useEffect(() => {
     if (window.ethereum) {
       window.ethereum.on("accountsChanged", (accounts) => {
         setAccounts(accounts);
       });
       window.ethereum.on("chainChanged", (chainId, ...rest) => {
-        setWallet({ ...wallet, networkChainId: parseInt(chainId, 16) });
+        getOnlineWallet().then((wallet) => {
+          setWallet(wallet);
+        });
       });
     }
   }, [wallet]);
 
   useEffect(() => {
-    async function getOnlineWallet() {
-      const provider = new ethers.BrowserProvider(window.ethereum);
-      const signer = await provider.getSigner();
-      const network = await provider.getNetwork();
-      const networkName = network.name;
-      const networkChainId = Number(network.chainId);
-      const balanceBigNumber = await provider.getBalance(signer.address);
-      const balance = ethers.formatEther(balanceBigNumber);
-      return {
-        address: signer.address,
-        network: networkName,
-        networkChainId,
-        value: balance,
-      };
-    }
-
     if (typeof window.ethereum !== "undefined") {
       console.log("MetaMask is installed!");
 

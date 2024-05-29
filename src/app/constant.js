@@ -3,6 +3,7 @@ export const chainIdToNetwork = {
   1: {
     chain_name: "Ethereum_Mainnet",
     chain_color: "#0000ff",
+    infura_name: "mainnet",
   },
   5: {
     chain_name: "Goerli_Testnet",
@@ -15,6 +16,7 @@ export const chainIdToNetwork = {
   8453: {
     chain_name: "Base",
     chain_color: "#000000",
+    infura_name: "base-mainnet",
   },
   56: {
     chain_name: "BSC",
@@ -49,6 +51,7 @@ export const networkChainArray = Object.keys(chainIdToNetwork).map((key) => {
     chainId: key,
     network: chainIdToNetwork[key].chain_name,
     chain_color: chainIdToNetwork[key].chain_color,
+    infura_name: chainIdToNetwork[key].infura_name,
   };
 });
 
